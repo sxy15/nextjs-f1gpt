@@ -1,24 +1,31 @@
 {
-  "name": "nextjs-f1gpt",
+  "name": "f1gpt",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "seed": "ts-node scripts/loadDb.ts",
+    "seed": "ts-node ./scripts/loadDb.ts",
     "lint": "next lint"
   },
   "dependencies": {
+    "@ai-sdk/react": "^1.2.9",
     "@datastax/astra-db-ts": "^1.5.0",
-    "@langchain/community": "^0.3.40",
-    "@langchain/core": "^0.3.44",
-    "langchain": "^0.3.21",
-    "next": "15.3.0",
-    "openai": "^4.93.0",
-    "puppeteer": "^24.6.1",
+    "@langchain/community": "^0.3.24",
+    "@langchain/core": "^0.3.30",
+    "@langchain/openai": "^0.3.17",
+    "@openrouter/ai-sdk-provider": "^0.4.5",
+    "ai": "^4.0.37",
+    "crypto": "^1.0.1",
+    "dotenv": "^16.4.7",
+    "langchain": "^0.3.11",
+    "next": "15.1.4",
+    "openai": "^4.78.1",
+    "puppeteer": "^24.1.0",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "ts-node": "^10.9.2"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
@@ -26,8 +33,9 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "15.3.0",
-    "ts-node": "^10.9.2",
+    "eslint-config-next": "15.1.4",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.1",
     "typescript": "^5"
   }
 }
