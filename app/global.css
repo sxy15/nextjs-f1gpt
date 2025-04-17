@@ -64,6 +64,7 @@ form {
     padding-top: 20px;
     border-radius: 0 0 10px 10px;
     overflow: hidden;
+    flex-shrink: 0;
 }
 
 input.question-box {

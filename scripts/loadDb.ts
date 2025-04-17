@@ -20,7 +20,14 @@ const openai = new OpenAI({
 
 const f1Data = [
     'https://en.wikipedia.org/wiki/Formula_One',
-    'https://en.wikipedia.org/wiki/2024_Formula_One_World_Championship',
+    'https://www.skysports.com/f1',
+    'https://www.skysports.com/f1/news/12433/13284600/lewis-hamilton-new-ferrari-driver-celebrates-40th-birthday-ahead-of-fresh-f1-adventure-in-2025',
+    'https://www.formula1.com/en/latest/all',
+    'https://www.formula1.com/en/latest/article/the-beginners-guide-to-the-formula-1-weekend.5RFZzGXNhEi9AEuMXwo987',
+    'https://www.redbull.com/ie-en/f1-24-tips-guide',
+    'https://www.formula1.com/en/racing/2023',
+    'https://www.formula1.com/en/racing/2023/United_States.html',
+    'https://www.formula1.com/en/racing/2022',
 ]
 
 const client = new DataAPIClient(ASTRA_DB_APPLICATION_TOKEN)
@@ -71,7 +78,7 @@ const loadSampleData = async () => {
             }
 
             const res = await collection.insertOne({
-                vector: vector,
+                $vector: vector,
                 text: chunk
             })
 

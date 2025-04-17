@@ -1,6 +1,6 @@
 import OpenAI from "openai";
 import { DataAPIClient } from "@datastax/astra-db-ts";
-import { generateText } from 'ai'
+import { streamText } from 'ai'
 import { createOpenRouter } from '@openrouter/ai-sdk-provider';
 
 const {
@@ -17,11 +17,8 @@ const openrouter = createOpenRouter({
     baseUrl: OPENAI_API_BASE_URL
 })
 
-const client = new DataAPIClient(ASTRA_DB_APPLICATION_TOKEN);
-
-const db = client.db(ASTRA_DB_API_ENDPOINT, {
-    namespace: ASTRA_DB_NAMESPACE
-});
+const client = new DataAPIClient(ASTRA_DB_APPLICATION_TOKEN)
+const db = client.db(ASTRA_DB_API_ENDPOINT, { namespace: ASTRA_DB_NAMESPACE })
 
 export async function POST(req: Request) {
     try {
@@ -45,11 +42,10 @@ export async function POST(req: Request) {
         const embedding = await res.json();
 
         try {
-            const collection = db.collection(ASTRA_DB_COLLECTION);
-            const cursor = collection.find(null, {
-                sort: {
-                    $vector: embedding.data[0].embedding,
-                },
+            const collection = await db.collection(ASTRA_DB_COLLECTION);
+
+            const cursor = collection.find({}, {
+                sort: { $vector: embedding.data[0].embedding },
                 limit: 10
             });
 
@@ -77,12 +73,15 @@ export async function POST(req: Request) {
             `
         };
 
-        const response = await generateText({
+        const result = streamText({
             model: openrouter("openai/gpt-4o-mini"),
-            messages: [template, ...messages]
+            messages: [template, ...messages.map((it) => ({
+                role: it.role,
+                content: it.parts
+            }))]
         });
 
-        return response.text;
+        return result.toDataStreamResponse();
 
     } catch (e) {
         throw e;
